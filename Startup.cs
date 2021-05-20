@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using StudentApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace StudentApi
 {
@@ -28,6 +30,11 @@ namespace StudentApi
         {
 
             services.AddControllers();
+            services.AddDbContext<StudentContext>( opt => opt.UseSqlServer(
+                Configuration.GetConnectionString("StudentConnection")
+            ));
+            services.AddScoped<IStudentRepo, SqlStudentRepo>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StudentApi", Version = "v1" });
@@ -40,6 +47,7 @@ namespace StudentApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StudentApi v1"));
             }
