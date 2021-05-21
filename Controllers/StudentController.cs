@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using StudentApi.Data;
+using StudentApi.Models;
 
 namespace StudentApi.Controllers
 {
@@ -6,10 +9,26 @@ namespace StudentApi.Controllers
     [Route("api/[controller]")]
     public class StudentController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<string> GetResult()
+        private readonly IStudentRepo _repository;
+
+        public StudentController(IStudentRepo repository)
         {
-            return "Hello API";
+            _repository = repository;
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable<Student>> GetResult()
+        {
+            return Ok(_repository.GetAllStudents());
+        }
+        [HttpGet("{id}")]
+        public ActionResult<Student> GetStudentById(int id)
+        {
+            var student = _repository.GetStudentById(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return Ok(student);
         }
 
     }

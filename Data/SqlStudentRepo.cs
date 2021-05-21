@@ -1,18 +1,26 @@
 using System.Collections.Generic;
+using System.Linq;
 using StudentApi.Models;
 
 namespace StudentApi.Data
 {
     public class SqlStudentRepo : IStudentRepo
     {
+        private readonly StudentContext _context;
+
+        public SqlStudentRepo(StudentContext context)
+        {
+            _context = context;
+        }
+        
         public IEnumerable<Student> GetAllStudents()
         {
-            throw new System.NotImplementedException();
+            return _context.Students.ToList();
         }
 
         public Student GetStudentById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Students.FirstOrDefault<Student>(p => p.Id == id);
         }
 
         public bool SaveChanges()
