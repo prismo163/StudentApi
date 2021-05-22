@@ -28,7 +28,7 @@ namespace StudentApi.Controllers
             return Ok(_mapper.Map<IEnumerable<StudentReadDto>>(students));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name="GetStudentById")]
         public ActionResult<StudentReadDto> GetStudentById(int id)
         {
             var student = _repository.GetStudentById(id);
@@ -37,6 +37,18 @@ namespace StudentApi.Controllers
                 return NotFound();
             }
             return Ok(_mapper.Map<StudentReadDto>(student));
+        }
+
+        [HttpPost]
+        public ActionResult<StudentReadDto> Create(StudentCreateDto stu)
+        {
+            var student = _mapper.Map<Student>(stu);
+            _repository.CreateStudent(student);
+            _repository.SaveChanges();
+            var readDto = _mapper.Map<StudentReadDto>(student);
+
+            
+            return CreatedAtRoute(nameof(GetStudentById),new { Id = readDto.Id}, readDto);
         }
 
     }

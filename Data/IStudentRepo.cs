@@ -5,9 +5,12 @@ namespace StudentApi.Data
 {
     public interface IStudentRepo
     {
-        public bool SaveChanges();
-        public IEnumerable<Student> GetAllStudents();
+        bool SaveChanges();
+        IEnumerable<Student> GetAllStudents();
         
-        public Student GetStudentById(int id);
+        Student GetStudentById(int id);
+        void CreateStudent(Student student);
+        void UpdateStudent(Student student);
+        void DeleteStudent(Student student); 
     }
 }

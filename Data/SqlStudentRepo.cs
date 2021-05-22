@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using StudentApi.Models;
@@ -12,7 +13,21 @@ namespace StudentApi.Data
         {
             _context = context;
         }
-        
+
+        public void CreateStudent(Student student)
+        {
+           if(student == null){
+               throw new ArgumentNullException(nameof(student));
+           }
+            _context.Add<Student>(student);
+            
+        }
+
+        public void DeleteStudent(Student student)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Student> GetAllStudents()
         {
             return _context.Students.ToList();
@@ -25,7 +40,12 @@ namespace StudentApi.Data
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return (_context.SaveChanges() >= 0);
+        }
+
+        public void UpdateStudent(Student student)
+        {
+            
         }
     }
 }

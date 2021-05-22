@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace StudentApi.Dtos
 {
-    public class StudentReadDto
+    public class StudentCreateDto
     {
-        public int Id { get; set; }
+        [Required]        
         public string Name { get; set; }
         public string Email { get; set; }
 

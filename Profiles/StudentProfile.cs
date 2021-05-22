@@ -9,6 +9,7 @@ namespace StudentApi.Profiles
         public StudentProfile()
         {
            CreateMap<Student,StudentReadDto>(); 
+           CreateMap<StudentCreateDto,Student>();
         }
     }
 }
