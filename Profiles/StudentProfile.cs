@@ -10,6 +10,7 @@ namespace StudentApi.Profiles
         {
            CreateMap<Student,StudentReadDto>(); 
            CreateMap<StudentCreateDto,Student>();
+           CreateMap<StudentUpdateDto,Student>();
         }
     }
 }

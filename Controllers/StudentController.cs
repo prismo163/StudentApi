@@ -51,5 +51,19 @@ namespace StudentApi.Controllers
             return CreatedAtRoute(nameof(GetStudentById),new { Id = readDto.Id}, readDto);
         }
 
+        [HttpPut("{id}")]
+        public ActionResult UpdateStudent(int id, StudentUpdateDto studentUpdateDto)
+        {
+            var studentModelFromRepo = _repository.GetStudentById(id);
+            if (studentModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(studentUpdateDto,studentModelFromRepo);
+            _repository.UpdateStudent(studentModelFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
     }
 }
