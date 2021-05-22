@@ -61,3 +61,6 @@ C:\temp\test\StudentApi\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.
 C:\temp\test\StudentApi\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\temp\test\StudentApi\bin\Debug\net5.0\AutoMapper.dll
 C:\temp\test\StudentApi\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\temp\test\StudentApi\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\temp\test\StudentApi\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\temp\test\StudentApi\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

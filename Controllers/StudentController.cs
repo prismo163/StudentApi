@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using StudentApi.Data;
 using StudentApi.Dtos;
@@ -61,6 +62,37 @@ namespace StudentApi.Controllers
             }
             _mapper.Map(studentUpdateDto,studentModelFromRepo);
             _repository.UpdateStudent(studentModelFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PatchStudent(int id, JsonPatchDocument<StudentUpdateDto> patchDocument)
+        {
+            var studentModelFromRepo = _repository.GetStudentById(id);
+            if (studentModelFromRepo == null){
+                return NotFound();
+            }
+            var studentToPatch = _mapper.Map<StudentUpdateDto>(studentModelFromRepo);
+            patchDocument.ApplyTo(studentToPatch, ModelState);
+            if(!TryValidateModel(studentToPatch)){
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(studentToPatch, studentModelFromRepo);
+            _repository.UpdateStudent(studentModelFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
+
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteStudent(int id)
+        {
+            var student = _repository.GetStudentById(id);
+            if( student == null){
+                return NotFound();
+            }
+            _repository.DeleteStudent(student);
             _repository.SaveChanges();
             return NoContent();
         }

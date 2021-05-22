@@ -25,7 +25,11 @@ namespace StudentApi.Data
 
         public void DeleteStudent(Student student)
         {
-            throw new System.NotImplementedException();
+            if (student == null){
+                throw new ArgumentNullException(nameof(student));
+            }
+            _context.Students.Remove(student);
+
         }
 
         public IEnumerable<Student> GetAllStudents()

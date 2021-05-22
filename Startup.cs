@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using StudentApi.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 namespace StudentApi
 {
@@ -30,11 +31,15 @@ namespace StudentApi
         public void ConfigureServices(IServiceCollection services)
         {
            
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson( s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+            
             services.AddDbContext<StudentContext>( opt => opt.UseSqlServer(
                 Configuration.GetConnectionString("StudentConnection")
             ));
             services.AddScoped<IStudentRepo, SqlStudentRepo>();
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             services.AddSwaggerGen(c =>
