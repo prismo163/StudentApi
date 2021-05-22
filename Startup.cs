@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using StudentApi.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace StudentApi
 {
@@ -28,13 +29,13 @@ namespace StudentApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Console.WriteLine(Configuration["UserId"]);
-            Console.WriteLine(Configuration["Password"]);
+           
             services.AddControllers();
             services.AddDbContext<StudentContext>( opt => opt.UseSqlServer(
                 Configuration.GetConnectionString("StudentConnection")
             ));
             services.AddScoped<IStudentRepo, SqlStudentRepo>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             services.AddSwaggerGen(c =>
             {
